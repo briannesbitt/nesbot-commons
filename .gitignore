@@ -1,0 +1,10 @@
+out
+
+# Cobertura
+*.ser
+
+# IntelliJ
+*.iml
+*.ipr
+*.iws
+.idea/
