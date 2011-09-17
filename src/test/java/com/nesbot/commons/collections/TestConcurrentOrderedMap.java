@@ -13,6 +13,7 @@ public class TestConcurrentOrderedMap
    private ConcurrentOrderedMap<String, Post> posts = new ConcurrentOrderedMap<String, Post>();
    private Post post = new Post("my-cool-post", "My Cool Post");
    private Post post2 = new Post("my-cool-post2", "My Cool Post2");
+   private Post post3 = new Post("my-cool-post3", "My Cool Post3");
 
    @Test
    public void testSize()
@@ -161,6 +162,82 @@ public class TestConcurrentOrderedMap
       assertEquals(2, posts.values().length);
       assertEquals(post, posts.values()[0]);
       assertEquals(post2, posts.values()[1]);
+   }
+   @Test
+   public void testRemoveDoesNotExist()
+   {
+      assertNull(posts.remove("dne"));
+
+      posts.append(post.slug, post);
+      assertNull(posts.remove("dne"));
+   }
+   @Test
+   public void testRemove()
+   {
+      posts.append(post.slug, post);
+      posts.append(post2.slug, post2);
+      posts.append(post3.slug, post3);
+      assertEquals(3, posts.size());
+      
+      assertEquals(post, posts.get(0));
+      assertEquals(post2, posts.get(1));
+      assertEquals(post3, posts.get(2));
+
+      Post removed = posts.remove(post.slug);
+
+      assertEquals(post, removed);
+      assertEquals(2, posts.size());
+
+      assertEquals(post2, posts.get(0));
+      assertEquals(post3, posts.get(1));
+
+      try
+      {
+         posts.get(2);
+         fail("should have thrown a IndexOutOfBoundsException");
+      }
+      catch(Exception ex)
+      {
+         assertTrue(ex instanceof IndexOutOfBoundsException);
+      }
+
+      removed = posts.remove(post3.slug);
+      assertEquals(post3, removed);
+      assertEquals(1, posts.size());
+
+      assertEquals(post2, posts.get(0));
+
+      try
+      {
+         posts.get(1);
+         fail("should have thrown a IndexOutOfBoundsException");
+      }
+      catch(Exception ex)
+      {
+         assertTrue(ex instanceof IndexOutOfBoundsException);
+      }
+
+      removed = posts.remove(post2.slug);
+      assertEquals(post2, removed);
+      assertEquals(0, posts.size());
+   }
+   @Test
+   public void testClearWhenEmpty()
+   {
+      assertEquals(0, posts.size());
+      posts.clear();
+      assertEquals(0, posts.size());
+   }
+   @Test
+   public void testClear()
+   {
+      assertEquals(0, posts.size());
+      posts.append(post.slug, post);
+      posts.append(post2.slug, post2);
+      assertEquals(2, posts.size());
+
+      posts.clear();
+      assertEquals(0, posts.size());
    }
 
    @Ignore

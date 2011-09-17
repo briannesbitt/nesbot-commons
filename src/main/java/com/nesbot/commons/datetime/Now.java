@@ -2,10 +2,6 @@ package com.nesbot.commons.datetime;
 
 public class Now
 {
-   public static Dater now()
-   {
-      return Dater.now();
-   }
    public static long millis()
    {
       return System.currentTimeMillis();

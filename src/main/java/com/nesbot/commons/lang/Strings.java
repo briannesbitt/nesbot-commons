@@ -132,13 +132,9 @@ public class Strings
 
    public static String randAsciiString(int length)
    {
-      if (length == 0)
+      if (length <= 0)
       {
-         return "";
-      }
-      if (length < 0)
-      {
-         throw new IllegalArgumentException("Requested random string length " + length + " is less than 0.");
+         throw new IllegalArgumentException("Length must be > 0.");
       }
 
       StringBuilder buf = new StringBuilder();
@@ -158,7 +154,7 @@ public class Strings
    {
       if (length <= 0)
       {
-         throw new IllegalArgumentException("Requested random string length " + length + " must be > 0.");
+         throw new IllegalArgumentException("Length must be > 0.");
       }
 
       StringBuilder buf = new StringBuilder();
@@ -178,7 +174,6 @@ public class Strings
       }
       return buf.toString();
    }
-
    public static String[] arrayPush(String[] src, String element)
    {
       String[] dest = new String[src.length + 1];

@@ -1,10 +1,9 @@
 package com.nesbot.commons.collections;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
-import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.Map;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 public class ConcurrentOrderedMap<K, V>
@@ -41,12 +40,9 @@ public class ConcurrentOrderedMap<K, V>
          {
             return false;
          }
-         if (values.add(value))
-         {
-            keysToIndex.put(key, values.size() - 1);
-            return true;
-         }
-         return false;
+         values.add(value);
+         keysToIndex.put(key, values.size() - 1);
+         return true;
       }
       finally
       {
@@ -106,7 +102,7 @@ public class ConcurrentOrderedMap<K, V>
       rLock.lock();
       try
       {
-         return (List<V>)values.clone();
+         return (List<V>) values.clone();
       }
       finally
       {
@@ -123,6 +119,49 @@ public class ConcurrentOrderedMap<K, V>
       finally
       {
          rLock.unlock();
+      }
+   }
+
+   public V remove(K key)
+   {
+      wLock.lock();
+      try
+      {
+         Integer index = keysToIndex.remove(key);
+         if (index == null)
+         {
+            return null;
+         }
+
+         V removed = values.remove(index.intValue());
+
+         // must update the indexes of the remaining keys only if they were more than the index that was removed.
+         for (Map.Entry<K, Integer> entry : keysToIndex.entrySet())
+         {
+            if (entry.getValue() > index)
+            {
+               entry.setValue(entry.getValue() - 1);
+            }
+         }
+
+         return removed;
+      }
+      finally
+      {
+         wLock.unlock();
+      }
+   }
+   public void clear()
+   {
+      wLock.lock();
+      try
+      {
+         keysToIndex.clear();
+         values.clear();
+      }
+      finally
+      {
+         wLock.unlock();
       }
    }
 }

@@ -89,4 +89,110 @@ public class TestStrings
       assertEquals("b", result.get(1));
       assertEquals("csepdsepesepfsepgsephsep", result.get(2));
    }
+   @Test
+   public void testRandAsciiString()
+   {
+      String r = Strings.randAsciiString(32);
+      assertEquals(32, r.length());
+      for (int i = 0; i < r.length(); i++)
+      {
+         char c = r.charAt(i);
+         assertTrue(33 <= c && c <= 126);
+      }
+      r = Strings.randAsciiString(1);
+      assertEquals(1, r.length());
+
+      try
+      {
+         r = Strings.randAsciiString(0);
+         fail();
+      }
+      catch (Exception ex)
+      {
+         assertTrue(ex instanceof IllegalArgumentException);
+      }
+
+      try
+      {
+         r = Strings.randAsciiString(-5);
+         fail();
+      }
+      catch (Exception ex)
+      {
+         assertTrue(ex instanceof IllegalArgumentException);
+      }
+      r = Strings.randAsciiString(1024);
+      assertEquals(1024, r.length());
+   }
+   @Test
+   public void testRandAlphaString()
+   {
+      String r = Strings.randAlphaString(32);
+      assertEquals(32, r.length());
+      r = Strings.randAlphaString(32);
+      for (int i = 0; i < r.length(); i++)
+      {
+         char c = r.charAt(i);
+         assertTrue(97 <= c && c <= 122);
+      }
+      r = Strings.randAlphaString(1);
+      assertEquals(1, r.length());
+
+      try
+      {
+         r = Strings.randAlphaString(0);
+         fail();
+      }
+      catch (Exception ex)
+      {
+         assertTrue(ex instanceof IllegalArgumentException);
+      }
+      try
+      {
+         r = Strings.randAlphaString(-5);
+         fail();
+      }
+      catch (Exception ex)
+      {
+         assertTrue(ex instanceof IllegalArgumentException);
+      }
+      r = Strings.randAlphaString(1024);
+      assertEquals(1024, r.length());
+   }
+   @Test
+   public void testRandAlphaStringWithUppercase()
+   {
+      String r = Strings.randAlphaString(32, true);
+      assertEquals(32, r.length());
+      r = Strings.randAlphaString(32, true);
+      for (int i = 0; i < r.length(); i++)
+      {
+         char c = r.charAt(i);
+         assertTrue((97 <= c && c <= 122) || (65 <= c && c <= 90));
+      }
+      r = Strings.randAlphaString(1, true);
+      assertEquals(1, r.length());
+
+      try
+      {
+         r = Strings.randAlphaString(0, true);
+         fail();
+      }
+      catch (Exception ex)
+      {
+         assertTrue(ex instanceof IllegalArgumentException);
+      }
+
+      try
+      {
+         r = Strings.randAlphaString(-5, true);
+         fail();
+      }
+      catch (Exception ex)
+      {
+         assertTrue(ex instanceof IllegalArgumentException);
+      }
+      r = Strings.randAlphaString(1024, true);
+      assertEquals(1024, r.length());
+   }
 }
