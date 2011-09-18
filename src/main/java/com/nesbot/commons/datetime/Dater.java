@@ -232,7 +232,7 @@ public class Dater implements Cloneable
    }
    public String toRFC822()
    {
-      return toString("EEE, d MMM yyyy HH:mm:ss Z");
+      return toString("EEE, dd MMM yyyy HH:mm:ss Z");
    }
    public String toString(String pattern)
    {
