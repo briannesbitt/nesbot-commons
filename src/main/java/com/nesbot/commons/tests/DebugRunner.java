@@ -69,15 +69,19 @@ public class DebugRunner
       if (!ranSome)
       {
          System.out.println("----> NO TESTS FOUND TO RUN <----");
+         System.exit(1);
          return;
       }
+
       if (failed == 0)
       {
          System.out.println("----> ALL TESTS PASSED <----");
+         System.exit(0);
       }
       else
       {
          System.out.println(Strings.format("----> FAILURES: {0} <----", failed));
+         System.exit(1);
       }
    }
 }
