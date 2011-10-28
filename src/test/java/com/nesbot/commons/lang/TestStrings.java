@@ -90,6 +90,27 @@ public class TestStrings
       assertEquals("csepdsepesepfsepgsephsep", result.get(2));
    }
    @Test
+   public void testStripWhiteSpacesWithIllegalArgs()
+   {
+      assertNull(Strings.stripWhiteSpace(null));
+      assertEquals("", Strings.stripWhiteSpace(""));
+   }
+   @Test
+   public void testStripWhiteSpacesDoNothing()
+   {
+      assertEquals("briannesbitt", Strings.stripWhiteSpace("briannesbitt"));
+   }
+   @Test
+   public void testStripWhiteSpacesOneSpace()
+   {
+      assertEquals("briannesbitt", Strings.stripWhiteSpace("brian nesbitt"));
+   }
+   @Test
+   public void testStripWhiteSpacesManySpaces()
+   {
+      assertEquals("briannesbitt", Strings.stripWhiteSpace(" brian n  es  b     itt "));
+   }
+   @Test
    public void testRandAsciiString()
    {
       String r = Strings.randAsciiString(32);

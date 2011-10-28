@@ -16,22 +16,22 @@ public class TestCompute
    @Test
    public void testRoundFloatUpHundreths()
    {
-      assertEquals(49500, Compute.round(49481.45500, -2), 0);
+      assertEquals(49500f, Compute.round(49481.45500f, -2), 0);
    }
    @Test
    public void testRoundFloatUpAtZero()
    {
-      assertEquals(2, Compute.round(1.50, 0), 0);
+      assertEquals(2f, Compute.round(1.50f, 0), 0);
    }
    @Test
    public void testRoundFloatUp()
    {
-      assertEquals(1.46, Compute.round(1.45500, 2), 0);
+      assertEquals(1.46f, Compute.round(1.45500f, 2), 0);
    }
    @Test
    public void testRoundFloatDown()
    {
-      assertEquals(1.445, Compute.round(1.4449, 3), 0);
+      assertEquals(1.445f, Compute.round(1.4449f, 3), 0);
    }
    @Test
    public void testRoundDoubleUpHundreths()
