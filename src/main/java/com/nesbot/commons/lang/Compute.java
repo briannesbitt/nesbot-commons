@@ -14,13 +14,18 @@ public class Compute
       long result = Math.round(f * factor);
       return (double)result / factor;
    }
+   public static int rand()
+   {
+      return rand(Integer.MIN_VALUE, Integer.MAX_VALUE);
+   }
    public static int rand(int maximumInclusive)
    {
       return rand(0, maximumInclusive);
    }
    public static int rand(int minimumInclusive, int maximumInclusive)
    {
-      long range = maximumInclusive - minimumInclusive + 1;
+      long range = maximumInclusive - minimumInclusive;
+      range = (maximumInclusive < 0) ? range - 1 : range + 1;
       long fraction = (long)(range * Math.random());
       return (int)(minimumInclusive + fraction);
    }
