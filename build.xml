@@ -1,82 +1,24 @@
-<project name="nesbot-commons" default="test-debug-runner" basedir=".">
-   <property name="jarFileName" location="out/production/nesbot-commons.jar"/>
-   <property name="srcJarFileName" location="out/production/nesbot-commons-src.jar"/>
+<project name="nesbot-commons" default="test-debug-runner">
    <property name="outputPath" location="out/production/nesbot-commons"/>
-   <property name="instrumentedOutputPath" location="out/instrumented/nesbot-commons"/>
-   <property name="coberturaReportPath" location="out/coverage-report"/>
    <property name="testPath" location="out/test/nesbot-commons"/>
-   <property name="srcPath" location="src"/>
-   <property name="mainSrcPath" location="${srcPath}/main/java"/>
-   <property name="testSrcPath" location="${srcPath}/test/java"/>
-   <property name="coberturaHome" location="src/test/resources/cobertura" />
 
    <target name="build">
-      <ant antfile="nesbot-commons.xml" />
-   </target>
-
-   <target name="package-jars" depends="build">
-      <jar destfile="${jarFileName}">
-         <fileset dir="${outputPath}" />
-      </jar>
-      <jar destfile="${srcJarFileName}">
-         <fileset dir="${srcPath}" />
-      </jar>
+      <exec executable="cmd">
+         <arg value="/c"/>
+         <arg value="rake"/>
+         <arg value="-q"/>
+         <arg value="compile"/>
+      </exec>
    </target>
 
    <target name="test-debug-runner" depends="build">
       <java classname="com.nesbot.commons.tests.DebugRunner" fork="true">
          <arg value="com.nesbot.commons" />
          <classpath>
-            <pathelement path="${instrumentedOutputPath}" />
             <pathelement path="${testPath}" />
             <pathelement path="${outputPath}" />
             <pathelement location="src/test/resources/junit-4.9.jar" />
          </classpath>
       </java>
-   </target>
-
-   <target name="test" depends="build">
-      <junit haltonfailure="yes" fork="true">
-         <classpath>
-            <pathelement path="${instrumentedOutputPath}" />
-            <pathelement path="${testPath}" />
-            <pathelement path="${outputPath}" />
-            <fileset dir="src/test">
-               <include name="**/*.jar" />
-            </fileset>
-         </classpath>
-
-         <formatter type="brief" usefile="false" />
-         <batchtest>
-            <fileset dir="${testPath}">
-               <include name="**/Test*.class" />
-            </fileset>
-         </batchtest>
-      </junit>
-   </target>
-
-   <target name="cobertura-report" depends="build">
-      <exec executable="cmd">
-         <arg value="/c"/>
-         <arg value="${coberturaHome}/cobertura-instrument.bat"/>
-         <arg value="--destination"/>
-         <arg value="${instrumentedOutputPath}"/>
-         <arg value="${outputPath}" />
-      </exec>
-      <antcall target="test" />
-      <exec executable="cmd">
-         <arg value="/c"/>
-         <arg value="${coberturaHome}/cobertura-report.bat"/>
-         <arg value="--format"/>
-         <arg value="html"/>
-         <arg value="--destination"/>
-         <arg value="${coberturaReportPath}"/>
-         <arg value="${mainSrcPath}" />
-      </exec>
-      <exec executable="cmd">
-         <arg value="/c"/>
-         <arg value="start"/>
-         <arg value="${coberturaReportPath}/index.html"/>
-      </exec>
    </target>
 </project>

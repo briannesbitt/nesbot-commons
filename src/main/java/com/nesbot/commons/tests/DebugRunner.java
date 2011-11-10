@@ -5,11 +5,7 @@ import com.nesbot.commons.lang.Strings;
 import org.junit.runner.Result;
 import org.junit.runner.notification.Failure;
 
-import java.io.File;
 import java.io.IOException;
-import java.net.URL;
-import java.util.ArrayList;
-import java.util.Enumeration;
 
 public class DebugRunner
 {
