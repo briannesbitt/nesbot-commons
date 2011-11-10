@@ -5,3 +5,5 @@ p. I have gathered some of the common code I have written lately and am making i
 b. The software is provided "AS IS", without warranty of any kind
 
 p. Latest version available at: "https://github.com/briannesbitt/nesbot-commons/downloads":https://github.com/briannesbitt/nesbot-commons/downloads
+
+p. Dependencies for "Bouncy Castle" and JUnit are available here: "https://github.com/briannesbitt/nesbot-commons/tree/master/src/main/resources":https://github.com/briannesbitt/nesbot-commons/tree/master/src/main/resources
