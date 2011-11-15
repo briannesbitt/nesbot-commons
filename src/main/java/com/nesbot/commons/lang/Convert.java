@@ -68,6 +68,19 @@ public class Convert
       ByteBuffer buffer = ByteBuffer.wrap(b).order(byteOrder);
       return buffer.getInt();
    }
+   public static long toLong(byte[] b)
+   {
+      return toLong(b, ByteOrder.nativeOrder());
+   }
+   public static long toLong(byte[] b, ByteOrder byteOrder)
+   {
+      ByteBuffer buffer = ByteBuffer.wrap(b).order(byteOrder);
+      return buffer.getLong();
+   }
+   public static String toString(byte[] b)
+   {
+      return new String(b);
+   }
 
    static final char[] BASE32_TABLE = new char[]
            {
@@ -100,7 +113,7 @@ public class Convert
          inx += 5;
       }
 
-      return new String(chars);
+      return new String(chars, 0, inx);
    }
    public static byte[] decodeReadableBase32(String value)
    {
@@ -119,11 +132,11 @@ public class Convert
 
       for (int i = 0; i < res; i += 5)
       {
-         triple = GetBase32Number(value.charAt(i)) << 19;
-         triple = triple | ((long) GetBase32Number(value.charAt(i + 1)) << 14);
-         triple = triple | ((long) GetBase32Number(value.charAt(i + 2)) << 9);
-         triple = triple | ((long) GetBase32Number(value.charAt(i + 3)) << 4);
-         triple = triple | ((byte) GetBase32Number(value.charAt(i + 4)));
+         triple = getBase32Number(value.charAt(i)) << 19;
+         triple = triple | ((long) getBase32Number(value.charAt(i + 1)) << 14);
+         triple = triple | ((long) getBase32Number(value.charAt(i + 2)) << 9);
+         triple = triple | ((long) getBase32Number(value.charAt(i + 3)) << 4);
+         triple = triple | ((byte) getBase32Number(value.charAt(i + 4)));
 
          bytes[inx] = (byte) ((triple & 0x00ff0000) >> 16);
          bytes[inx + 1] = (byte) ((triple & 0x0000ff00) >> 8);
@@ -134,7 +147,7 @@ public class Convert
       return Arrays.copyOfRange(bytes, 0, inx);
    }
 
-   private static void EnsureReverseLookupIsPopulated()
+   private static void ensureReverseLookupIsPopulated()
    {
       if (BASE32_TABLE_LOOKUP.size() == 0)
       {
@@ -150,9 +163,9 @@ public class Convert
          }
       }
    }
-   private static int GetBase32Number(char c)
+   private static int getBase32Number(char c)
    {
-      EnsureReverseLookupIsPopulated();
+      ensureReverseLookupIsPopulated();
 
       if (!BASE32_TABLE_LOOKUP.containsKey(c))
       {
@@ -161,6 +174,4 @@ public class Convert
 
       return BASE32_TABLE_LOOKUP.get(c);
    }
-
-   
 }
