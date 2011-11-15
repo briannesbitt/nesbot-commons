@@ -98,7 +98,7 @@ task :release => [:test, :jars] do
 
    fail "\n***** Can't release without a clean git directory !!\n\n" unless uncommits.split.length == 0
 
-   version = `git describe --tags`.strip
+   version = `git describe --tags --long`.strip
    version = version.slice(1..-1) unless version[0] != "v"
    version = version.slice(0..version.rindex('-')-1).sub("-",".")
 
