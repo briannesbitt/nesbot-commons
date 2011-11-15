@@ -16,6 +16,8 @@ import org.bouncycastle.crypto.signers.RSADigestSigner;
 
 public class RSAHelper
 {
+   private RSAHelper() {}
+
    public static byte[] sign(RSAPrivateCrtKeyParameters privateCrtKeyParameters, String data) throws CryptoException
    {
       return sign(privateCrtKeyParameters, data.getBytes());
