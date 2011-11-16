@@ -24,7 +24,7 @@ public class Compute
    }
    public static int rand(int minimumInclusive, int maximumInclusive)
    {
-      long range = maximumInclusive - minimumInclusive;
+      long range = (long)maximumInclusive - (long)minimumInclusive;
       range = (maximumInclusive < 0) ? range - 1 : range + 1;
       long fraction = (long)(range * Math.random());
       return (int)(minimumInclusive + fraction);

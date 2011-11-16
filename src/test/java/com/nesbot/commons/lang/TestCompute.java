@@ -132,5 +132,18 @@ public class TestCompute
       r = Compute.rand(1, 1);
       assertTrue(r == 1);
    }
-
+   @Test
+   public void testRandRandomness()
+   {
+      assertTrue(Compute.rand() != Compute.rand());
+      assertTrue(Compute.rand() != Compute.rand());
+      assertTrue(Compute.rand() != Compute.rand());
+      assertTrue(Compute.rand() != Compute.rand());
+      assertTrue(Compute.rand() != Compute.rand());
+      assertTrue(Compute.rand() != Compute.rand());
+      assertTrue(Compute.rand() != Compute.rand());
+      assertTrue(Compute.rand() != Compute.rand());
+      assertTrue(Compute.rand() != Compute.rand());
+      assertTrue(Compute.rand() != Compute.rand());
+   }
 }
