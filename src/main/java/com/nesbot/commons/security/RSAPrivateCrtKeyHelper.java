@@ -15,11 +15,17 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.math.BigInteger;
 import java.security.KeyPair;
+import java.security.Provider;
 import java.security.SecureRandom;
 import java.security.Security;
 
 public class RSAPrivateCrtKeyHelper
 {
+   static
+   {
+      Security.addProvider(new BouncyCastleProvider());
+   }
+
    public static RSAPrivateCrtKeyParameters generate()
    {
       return generate(BigInteger.valueOf(65537), new SecureRandom(), 1024, 80);
@@ -34,7 +40,6 @@ public class RSAPrivateCrtKeyHelper
 
    public static RSAPrivateCrtKeyParameters fromPem(String pemFile) throws IOException
    {
-      Security.addProvider(new BouncyCastleProvider());
       FileReader reader = new FileReader(pemFile);
 
       try
